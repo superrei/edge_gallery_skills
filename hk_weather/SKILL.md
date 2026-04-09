@@ -1,5 +1,5 @@
 ---
-name: hong-kong-weather
+name: hk_weather
 description: Fetches real-time temperature from the HKO station.
 ---
 
