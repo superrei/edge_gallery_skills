@@ -1,6 +1,6 @@
 ---
 name: hong-kong-weather
-description: Fetches real-time temperature from the HKO station and specific rainfall data for Yau Tsim Mong.
+description: Fetches real-time temperature from the HKO station.
 ---
 
 # Hong Kong Weather Agent Skill
