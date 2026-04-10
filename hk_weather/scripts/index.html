@@ -15,15 +15,17 @@
             
             try {
                 // Fetch data from three primary HKO endpoints
-                const [currentRes, localRes, nineDayRes] = await Promise.all([
+                const [currentRes, localRes, nineDayRes, swtRes] = await Promise.all([
                     fetch(`${baseUrl}?dataType=rhrread&lang=en`),
                     fetch(`${baseUrl}?dataType=flw&lang=en`),
-                    fetch(`${baseUrl}?dataType=fnd&lang=en`)
+                    fetch(`${baseUrl}?dataType=fnd&lang=en`),
+                    fetch(`${baseUrl}?dataType=swt&lang=en`)
                 ]);
 
                 const current = await currentRes.json();
                 const local = await localRes.json();
                 const nineDay = await nineDayRes.json();
+                const swtData = await swtRes.json();
 
                 // 1. Find temperature specifically for "Hong Kong Observatory"
                 const hkoTemp = current.temperature?.data?.find(item => item.place === "Hong Kong Observatory");
@@ -37,6 +39,7 @@
                 // Compile result object for the AI Agent
                 const result = {
                     source: "Hong Kong Observatory",
+                    special_weather_tips: swtData.swt || [],
                     current_conditions: {
                         temperature: hkoTemp ? `${hkoTemp.value}°${hkoTemp.unit}` : "Data unavailable for HKO station",
                         humidity: currentHumidity ? `${currentHumidity.value}%` : "Data unavailable",
