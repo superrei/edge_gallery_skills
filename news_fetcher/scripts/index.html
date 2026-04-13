@@ -25,7 +25,7 @@
                 // Fetch all feeds in parallel
                 const feedPromises = urls.map(async (url) => {
                     try {
-                        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+                        const proxyUrl = `https://api.allorigins.win/raw?${encodeURIComponent(url)}`;
                         const response = await fetch(proxyUrl);
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status} for url: ${url}`);
