@@ -46,7 +46,7 @@
                             };
                         });
                     } catch (e) {
-                         console.error(`Error fetching or parsing ${url}:`, e);
+                         console.error(`Error fetching or parsing ${url}: ${e.message}`, e);
                          // Return an empty array for this feed if it fails, so we still process the others
                          return [];
                     }
