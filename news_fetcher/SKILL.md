@@ -22,32 +22,35 @@ Trigger this skill when the user asks for news updates, specifically regarding H
 
 ## Instructions for the AI
 
-Call the `run_js` tool with the following exact parameters:
-- data: A JSON string with the following field:
-  - feeds: List of String. Each string is a URL of an RSS feed to crawl.
+Call the `run_js` tool using `index.html` and a JSON string for `data` with the following field:
+- **feeds**: Required. A list of Strings. Each string is a URL of an RSS feed to crawl. Depending on processing logic below,
+use RSS feeds from the above list or any other relevant feeds.
 
 ### Processing Logic
 
 From the enquiry of the prompt, identify if is a general enquiry, or a specific enquiry (e.g. "Give me the latest finance news"). Based on the enquiry, apply the following rules:
 
 #### General Enquiry (e.g. "Give me the latest news updates")
-1. **Prioritization**: Group and sort news in this order:
+1. **Fetching**: Retrieve news items from all specified feeds.
+
+2. **Prioritization**: Group and sort news in this order:
    * **Priority 1**: Hong Kong Local
    * **Priority 2**: Finance
    * **Priority 3**: International
    * **Priority 4**: Technology (extracted from general feeds)
    * **Priority 5**: Sport
 
-2. **Exclusion**: Completely ignore/filter out any news related to entertainment, celebrity gossip, or "Gossip" categories.
+3. **Exclusion**: Completely ignore/filter out any news related to entertainment, celebrity gossip, or "Gossip" categories.
 
-3. **Public Impact**: Focus on stories involving policy changes, economic shifts, or public safety.
-4. **Item count limitation**: Return a maximum of 5 news items, ensuring a mix of categories if possible while adhering to the prioritization and relevance criteria.
+4. **Public Impact**: Focus on stories involving policy changes, economic shifts, or public safety.
+5. **Item count limitation**: Return a maximum of 5 news items, ensuring a mix of categories if possible while adhering to the prioritization and relevance criteria.
 
 #### Specific Enquiry (e.g. "Give me the latest news about Middle East warfare")
-1. **Category Focus**: Only return news from the specified topic (e.g. Middle East warfare).
-2. **Relevance**: Ensure the news is directly related to the specified topic, even if it means including international news that may not be in the top priority category.
-3. **Exclusion**: Still filter out any entertainment or gossip news, even if it tangentially relates to the topic.
-4. **Item count limitation**: Return a maximum of 5 news items, ensuring a mix of categories if possible while adhering to the prioritization and relevance criteria.
+1. **Fetching**: Retrieve news items from all specified feeds.
+2. **Category Focus**: Only return news from the specified topic (e.g. Middle East warfare).
+3. **Relevance**: Ensure the news is directly related to the specified topic, even if it means including international news that may not be in the top priority category.
+4. **Exclusion**: Still filter out any entertainment or gossip news, even if it tangentially relates to the topic.
+5. **Item count limitation**: Return a maximum of 5 news items, ensuring a mix of categories if possible while adhering to the prioritization and relevance criteria.
 
 ## Language and Tone
 
