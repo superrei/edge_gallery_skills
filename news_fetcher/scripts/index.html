@@ -30,7 +30,7 @@
                             throw new Error(`HTTP error! status: ${response.status} for url: ${url}`);
                         }
                         const xmlText = await response.text();
-                        console.log(`Response from ${url}:`, xmlText);
+                        console.warn(`Fetched data from ${url}:`, xmlText.substring(0, 200) + "..."); // Log the first 200 chars for debugging
                         const parser = new DOMParser();
                         const xmlDoc = parser.parseFromString(xmlText, "text/xml");
                         const items = xmlDoc.querySelectorAll("item");
