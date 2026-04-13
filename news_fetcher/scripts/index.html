@@ -27,7 +27,8 @@
                     try {
                         const response = await fetch(url);
                         if (!response.ok) {
-                             throw new Error(`HTTP error! status: ${response.status} for url: ${url}`);
+                            console.log(`Failed to fetch ${url}: ${response.statusText}`);
+                            throw new Error(`HTTP error! status: ${response.status} for url: ${url}`);
                         }
                         const xmlText = await response.text();
                         const parser = new DOMParser();
@@ -36,12 +37,6 @@
 
                         // Extract items and convert to JSON structure
                         return Array.from(items).map(item => {
-                            console.log(`Processing item from ${url}:`, {
-                                title: item.querySelector("title")?.textContent || "",
-                                link: item.querySelector("link")?.textContent || "",
-                                pubDate: item.querySelector("pubDate")?.textContent || "",
-                                description: item.querySelector("description")?.textContent || ""
-                            });
                             return {
                                 title: item.querySelector("title")?.textContent || "",
                                 link: item.querySelector("link")?.textContent || "",
