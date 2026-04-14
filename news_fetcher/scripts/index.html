@@ -7,14 +7,20 @@
 <body>
     <script>
         /**
-         * Cleans text by removing control characters like newlines, tabs, and carriage returns,
-         * and trimming whitespace to ensure the LLM receives a clean string.
+         * Cleans text by decoding HTML entities, removing control characters, 
+         * and normalizing quotes/whitespace for the LLM.
          */
         const cleanText = (text) => {
             if (!text) return "";
-            return text
+            
+            // 1. Create a temporary element to decode HTML entities (like &quot;, &amp;)
+            const doc = new DOMParser().parseFromString(text, 'text/html');
+            let decodedText = doc.documentElement.textContent;
+
+            return decodedText
                 .replace(/[\r\n\t]+/g, " ") // Replace newlines, returns, and tabs with a single space
-                .replace(/\\"/g, '"')       // Fix escaped quotes if they exist in raw text
+                .replace(/["“”„]/g, "'")    // Optional: Convert all types of double quotes to single quotes to prevent JSON nesting issues
+                .replace(/\\/g, "")         // Remove literal backslashes
                 .replace(/\s\s+/g, ' ')     // Replace multiple spaces with one
                 .trim();
         };
