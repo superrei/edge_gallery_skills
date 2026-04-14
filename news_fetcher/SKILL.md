@@ -25,7 +25,7 @@ The following feeds should be fetched by the JS script:
 
 Call the `run_js` tool using `index.html` and a JSON string for `data` with the following field:
 - **feeds**: Required. A list of Strings. Each string is a URL of an RSS feed to crawl. Depending on processing logic below,
-use RSS feeds from the above list or any other relevant feeds.
+use RSS feeds from the above list.
 
 ### Processing Logic
 
