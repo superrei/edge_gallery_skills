@@ -17,7 +17,6 @@ The following feeds should be fetched by the JS script:
 * **Local**: [https://news.mingpao.com/rss/ins/s00001.xml](https://news.mingpao.com/rss/ins/s00001.xml)
 * **Finance**: [https://news.mingpao.com/rss/ins/s00002.xml](https://news.mingpao.com/rss/ins/s00002.xml)
 * **International**: [https://news.mingpao.com/rss/ins/s00005.xml](https://news.mingpao.com/rss/ins/s00005.xml)
-* **Sport**: [https://news.mingpao.com/rss/ins/s00006.xml](https://news.mingpao.com/rss/ins/s00006.xml)
 
 ## When to Use This Skill
 
