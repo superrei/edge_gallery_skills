@@ -10,16 +10,16 @@ metadata:
 
 This skill allows the AI to browse multiple news RSS feeds. It prioritizes news by category and impact while filtering out entertainment gossip.
 
+## When to Use This Skill
+
+Trigger this skill when the user asks for news updates, specifically regarding Hong Kong, financial markets, or major global events.
+
 ## RSS Feed Sources
 
 The following feeds should be fetched by the JS script:
 
 * **Local**: [https://rthk.hk/rthk/news/rss/e_expressnews_elocal.xml](https://rthk.hk/rthk/news/rss/e_expressnews_elocal.xml)
 * **International**: [https://rthk.hk/rthk/news/rss/e_expressnews_einternational.xml](https://rthk.hk/rthk/news/rss/e_expressnews_einternational.xml)
-
-## When to Use This Skill
-
-Trigger this skill when the user asks for news updates, specifically regarding Hong Kong, financial markets, or major global events.
 
 ## Instructions for the AI
 
@@ -34,10 +34,5 @@ use RSS feeds from the above list or any other relevant feeds.
 2. The script return a JSON object containing `articles`, which is an array of news items with the following fields: `title`, `description`, `link`, `pubDate`, and `sourceUrl`.
 3. Return the title and description of the news items in a concise manner, highlighting the key points and implications for the reader. Always include a link to the original article for further reading.
 4. **Exclusion**: Completely ignore/filter out any news related to entertainment, celebrity gossip, or "Gossip" categories.
-5. **Item count limitation**: Return a maximum of 5 news items, ensuring a mix of categories if possible while adhering to the prioritization and relevance criteria.
 
-
-## Language and Tone
-
-The news items may be written in English or Chinese. When presenting the news, use the same language as the source material. Summarize the news in a concise manner, highlighting the key points and implications for the reader. Always include a link to the original article for further reading.
 
