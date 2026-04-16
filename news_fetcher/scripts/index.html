@@ -7,22 +7,47 @@
 <body>
     <script>
         /**
-         * Cleans text by decoding HTML entities, removing control characters, 
-         * and normalizing quotes/whitespace for the LLM.
+         * Cleans text and truncates it to a maximum of 3 sentences.
+         * Handles English full stops (.) and Chinese full stops (。).
          */
-        const cleanText = (text) => {
+        const cleanAndTruncateText = (text) => {
             if (!text) return "";
             
-            // 1. Create a temporary element to decode HTML entities (like &quot;, &amp;)
+            // 1. Decode HTML entities
             const doc = new DOMParser().parseFromString(text, 'text/html');
             let decodedText = doc.documentElement.textContent;
 
-            return decodedText
-                .replace(/[\r\n\t]+/g, " ") // Replace newlines, returns, and tabs with a single space
-                .replace(/["“”„]/g, "'")    // Optional: Convert all types of double quotes to single quotes to prevent JSON nesting issues
-                .replace(/\\/g, "")         // Remove literal backslashes
-                .replace(/\s\s+/g, ' ')     // Replace multiple spaces with one
+            // 2. Initial cleaning of control characters and backslashes
+            let cleaned = decodedText
+                .replace(/[\r\n\t]+/g, " ")
+                .replace(/["“”„]/g, "'")
+                .replace(/\\/g, "")
+                .replace(/\s\s+/g, ' ')
                 .trim();
+
+            // 3. Truncate to first 3 sentences
+            // Split by English full stop followed by space OR Chinese full stop
+            // We use a lookbehind/lookahead style logic or a simple split/slice
+            const sentences = cleaned.split(/([.。])\s*/);
+            
+            let result = "";
+            let sentenceCount = 0;
+            
+            for (let i = 0; i < sentences.length; i++) {
+                if (sentenceCount >= 3) break;
+                
+                const part = sentences[i];
+                if (part === "." || part === "。") {
+                    result += part;
+                    sentenceCount++;
+                } else if (part.trim().length > 0) {
+                    result += (result.length > 0 && !result.endsWith("。") ? " " : "") + part;
+                    // If this is the last part and doesn't have a trailing punctuation, count it as a sentence
+                    if (i === sentences.length - 1) sentenceCount++;
+                }
+            }
+
+            return result.trim();
         };
 
         /**
